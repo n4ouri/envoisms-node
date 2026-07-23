@@ -1,0 +1,30 @@
+{
+  "name": "envoisms",
+  "version": "1.0.0",
+  "description": "Official Node.js / TypeScript SDK for EnvoiSMS.ma - SMS, WhatsApp & OTP API in Morocco",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "envoisms",
+    "sms",
+    "morocco",
+    "otp",
+    "whatsapp",
+    "maroc",
+    "telecom"
+  ],
+  "author": "EnvoiSMS.ma <contact@envoisms.ma>",
+  "license": "MIT",
+  "homepage": "https://envoisms.ma/fr/docs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/envoisms/envoisms-node.git"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
