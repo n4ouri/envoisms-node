@@ -2,20 +2,20 @@ export interface SendMessageOptions {
   to: string;
   message: string;
   from?: string;
-  channel?: 'sms' | 'whatsapp' | 'telegram';
-  cascade?: boolean;
+  channel?: 'sms' | 'whatsapp';
+  metadata?: Record<string, unknown>;
 }
 
 export interface SendBulkOptions {
   messages: Array<{ to: string; message: string; metadata?: Record<string, unknown> }>;
   from?: string;
-  channel?: 'sms' | 'whatsapp' | 'telegram';
+  channel?: 'sms' | 'whatsapp';
 }
 
 export interface SendOtpOptions {
   to: string;
   brand?: string;
-  channel?: 'sms' | 'whatsapp' | 'telegram';
+  channel?: 'sms' | 'whatsapp';
   code_length?: number;
   expiry?: number;
   template?: string;
@@ -37,8 +37,9 @@ export interface CreateApiKeyOptions {
 
 export interface CreateTopupOptions {
   amount_eur?: number;
+  amount_mad?: number;
   pack_id?: string;
-  payment_method?: 'stripe' | 'cashplus' | 'bank_transfer';
+  payment_method?: 'stripe' | 'crypto';
 }
 
 export class EnvoiSMSClient {
@@ -64,6 +65,10 @@ export class EnvoiSMSClient {
     });
   }
 
+  async getMessage(id: string) {
+    return this.request(`/v1/messages/${encodeURIComponent(id)}`);
+  }
+
   async sendOtp(options: SendOtpOptions) {
     return this.request('/v1/verify/send', {
       method: 'POST',
@@ -76,6 +81,14 @@ export class EnvoiSMSClient {
       method: 'POST',
       body: JSON.stringify(options),
     });
+  }
+
+  async getBalance() {
+    return this.request('/v1/billing/balance');
+  }
+
+  async listPacks() {
+    return this.request('/v1/billing/packs');
   }
 
   async analytics(days = 30) {
