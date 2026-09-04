@@ -1,8 +1,8 @@
 # EnvoiSMS Node.js SDK
 
-Official Node.js and TypeScript client for [EnvoiSMS.ma](https://envoisms.ma) — SMS, WhatsApp & OTP API platform for Morocco.
+Official Node.js and TypeScript client for [EnvoiSMS.ma](https://envoisms.ma) — [Passerelle SMS & WhatsApp Business](https://envoisms.ma/fr/docs) and [API SMS Maroc](https://envoisms.ma/fr/tarifs).
 
-For full API documentation, endpoints, and guides, visit [EnvoiSMS Documentation](https://envoisms.ma/fr/docs).
+For full API documentation, endpoints, and guides, visit the [Passerelle SMS & WhatsApp Business](https://envoisms.ma/fr/docs). For pricing plans and credit packs, visit [API SMS Maroc](https://envoisms.ma/fr/tarifs).
 
 ## Installation
 
@@ -63,9 +63,10 @@ if (verifyResult.verified) {
 - **Message Status**: `client.listMessages()`
 - **API Keys**: `client.createApiKey()`
 
-## Documentation
+## Documentation & Tarifs
 
-Full platform documentation is available at [https://envoisms.ma/fr/docs](https://envoisms.ma/fr/docs).
+- Documentation technique & intégration : [Passerelle SMS & WhatsApp Business](https://envoisms.ma/fr/docs)
+- Grille tarifaire et packs de crédits : [API SMS Maroc](https://envoisms.ma/fr/tarifs)
 
 ## License
 
