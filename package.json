@@ -1,7 +1,7 @@
 {
   "name": "envoisms",
-  "version": "1.0.0",
-  "description": "Official Node.js / TypeScript SDK for EnvoiSMS.ma - SMS, WhatsApp & OTP API in Morocco",
+  "version": "1.1.0",
+  "description": "Official Node.js / TypeScript SDK for EnvoiSMS.ma - direct-operator SMS, WhatsApp Business API (WABA) and OTP/2FA verification for Morocco",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -12,19 +12,31 @@
     "envoisms",
     "sms",
     "morocco",
-    "otp",
-    "whatsapp",
     "maroc",
+    "otp",
+    "2fa",
+    "whatsapp",
+    "whatsapp-api",
+    "whatsapp-business-api",
+    "sms-api",
+    "sms-gateway",
+    "bulk-sms",
+    "africa",
+    "verification",
     "telecom"
   ],
   "author": "EnvoiSMS.ma <contact@envoisms.ma>",
   "license": "MIT",
-  "homepage": "https://envoisms.ma/fr/docs",
+  "homepage": "https://envoisms.ma",
   "repository": {
     "type": "git",
-    "url": "https://github.com/envoisms/envoisms-node.git"
+    "url": "https://github.com/n4ouri/envoisms-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/n4ouri/envoisms-node/issues"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
   }
 }

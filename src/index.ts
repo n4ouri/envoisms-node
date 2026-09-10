@@ -16,6 +16,12 @@ export interface SendMessageOptions {
   metadata?: Record<string, unknown>;
 }
 
+export interface SendBulkOptions {
+  messages: Array<{ to: string; message: string; metadata?: Record<string, unknown> }>;
+  from?: string;
+  channel?: 'sms' | 'whatsapp';
+}
+
 export interface SendOtpOptions {
   to: string;
   channel?: 'sms' | 'whatsapp' | 'voice' | 'rcs';
@@ -23,6 +29,20 @@ export interface SendOtpOptions {
   code_length?: 4 | 6 | 8;
   expiry?: number;
   app_id?: string;
+}
+
+export interface CreateApiKeyOptions {
+  name?: string;
+  permissions?: string[];
+  rate_limit?: number;
+  ip_whitelist?: string[];
+}
+
+export interface CreateTopupOptions {
+  amount_eur?: number;
+  amount_mad?: number;
+  pack_id?: string;
+  payment_method?: 'stripe' | 'crypto';
 }
 
 export interface WebhookEvent<T = Record<string, unknown>> {
@@ -76,11 +96,7 @@ export class EnvoiSMSClient {
     }>('/v1/messages', { method: 'POST', body: JSON.stringify(input) });
   }
 
-  async sendBulk(input: {
-    messages: Array<{ to: string; message: string; metadata?: Record<string, unknown> }>;
-    from?: string;
-    channel?: 'sms' | 'whatsapp';
-  }) {
+  async sendBulk(input: SendBulkOptions) {
     return this.request<{
       batch_id: string;
       total: number;
@@ -122,16 +138,13 @@ export class EnvoiSMSClient {
     }>('/v1/verify/send', { method: 'POST', body: JSON.stringify(input) });
   }
 
-  async checkOtp(sessionId: string, code: string) {
+  async checkOtp(input: { session_id: string; code: string }) {
     return this.request<{
       session_id: string;
       verified: boolean;
       status: string;
       verified_at?: string;
-    }>('/v1/verify/check', {
-      method: 'POST',
-      body: JSON.stringify({ session_id: sessionId, code }),
-    });
+    }>('/v1/verify/check', { method: 'POST', body: JSON.stringify(input) });
   }
 
   async getOtpSession(sessionId: string) {
@@ -160,6 +173,28 @@ export class EnvoiSMSClient {
     return this.request<{
       packs: Array<{ id: string; name: string; sms_count: number; price_mad: number; price_eur: number }>;
     }>('/v1/billing/packs');
+  }
+
+  async listPaymentMethods() {
+    return this.request('/v1/billing/payment-methods');
+  }
+
+  async createTopup(input: CreateTopupOptions) {
+    return this.request('/v1/billing/topups', { method: 'POST', body: JSON.stringify(input) });
+  }
+
+  // --- Analytics & API Keys ---
+  async analytics(days = 30) {
+    return this.request(`/v1/analytics?days=${days}`);
+  }
+
+  async createApiKey(input: CreateApiKeyOptions) {
+    return this.request('/v1/api-keys', { method: 'POST', body: JSON.stringify(input) });
+  }
+
+  // --- Compliance ---
+  async createOptout(phone: string) {
+    return this.request('/v1/optouts', { method: 'POST', body: JSON.stringify({ phone }) });
   }
 
   // --- Webhook Signature Verification ---
@@ -219,7 +254,7 @@ export class EnvoiSMSClient {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${this.apiKey}`,
-            'User-Agent': 'EnvoiSMS-NodeSDK/1.0.0',
+            'User-Agent': 'EnvoiSMS-NodeSDK/1.1.0',
             ...(init.headers || {}),
           },
         });
